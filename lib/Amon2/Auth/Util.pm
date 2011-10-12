@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use utf8;
 
-package Amon2::Plugin::Auth::Util;
+package Amon2::Auth::Util;
 use parent qw(Exporter);
 
 our @EXPORT_OK = qw(parse_content);
@@ -22,6 +22,4 @@ sub parse_content {
     return $params;
 }
 
-
 1;
-
