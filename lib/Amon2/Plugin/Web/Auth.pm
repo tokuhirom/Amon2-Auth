@@ -1,4 +1,4 @@
-package Amon2::Plugin::Auth;
+package Amon2::Plugin::Web::Auth;
 use strict;
 use warnings;
 use 5.008001;
@@ -57,15 +57,15 @@ __END__
 
 =head1 NAME
 
-Amon2::Plugin::Auth -
+Amon2::Plugin::Web::Auth -
 
 =head1 SYNOPSIS
 
-  use Amon2::Plugin::Auth;
+  use Amon2::Plugin::Web::Auth;
 
 =head1 DESCRIPTION
 
-Amon2::Plugin::Auth is
+Amon2::Plugin::Web::Auth is
 
 =head1 AUTHOR
 
