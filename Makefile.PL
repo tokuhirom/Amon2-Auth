@@ -5,16 +5,15 @@ name 'Amon2-Auth';
 all_from 'lib/Amon2/Auth.pm';
 
 requires 'Amon2' => '3.03';
-requires 'Plack' =>  0.9949;
+requires 'Plack' =>  '0.9984';
 requires 'LWP' => '6.00';
 requires 'LWP::Protocol::https' => '6.00';
-requires 'JSON' => 2;
+requires 'JSON' => '2.53';
 
-requires 'Class::Method::Modifiers';
-requires 'Mouse';
+requires 'Mouse' => 0.97;
 
-# for Github
-requires 'Hash::MultiValue';
+# for Github/Facebook
+requires 'Hash::MultiValue' => 0.10;
 requires 'URI::Escape';
 
 # for Twitter
