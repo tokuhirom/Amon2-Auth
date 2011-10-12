@@ -6,6 +6,7 @@ package Amon2::Plugin::Auth::Site::Github;
 
 use LWP::UserAgent;
 use JSON;
+use Amon2::Plugin::Auth::Util qw(parse_content);
 our $VERSION = '0.01';
 
 my $ua = LWP::UserAgent->new(agent => "Amon2::Plugin::OAuth::Client/$VERSION");
@@ -13,7 +14,7 @@ my $ua = LWP::UserAgent->new(agent => "Amon2::Plugin::OAuth::Client/$VERSION");
 our $AUTHORIZE_URL = 'https://github.com/login/oauth/authorize';
 our $ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
 
-sub authenticate {
+sub auth_uri {
     my ($class, $c, $conf) = @_;
 	$conf->{client_id} || die "Missing Auth.github.client_id";
 
@@ -21,6 +22,12 @@ sub authenticate {
 	$redirect_uri->query_form(
 		map { ($_ => $conf->{$_}) } grep { exists $conf->{$_} } qw(client_id redirect_url scope)
     );
+	return $redirect_uri->as_string;
+}
+
+sub authenticate {
+    my ($class, $c, $conf) = @_;
+	my $redirect_uri = $class->auth_uri($c, $conf);
 	return $c->redirect($redirect_uri);
 }
 
@@ -43,21 +50,6 @@ sub callback {
 	return $code_conf->{on_finished}->(
 		$c, 'github', $access_token
 	);
-}
-
-# taken from OAuth::Lite2::Util
-use Hash::MultiValue;
-use URI::Escape qw(uri_unescape);
-sub parse_content {
-    my $content = shift;
-    my $params  = Hash::MultiValue->new;
-    for my $pair ( split /\&/, $content ) {
-        my ( $key, $value ) = split /\=/, $pair;
-        $key   = uri_unescape( $key   || '' );
-        $value = uri_unescape( $value || '' );
-        $params->add( $key, $value );
-    }
-    return $params;
 }
 
 1;

@@ -6,10 +6,10 @@ our $VERSION = '0.01';
 use Class::Method::Modifiers qw(install_modifier);
 use Amon2::Plugin::Auth::Site::Github;
 use Amon2::Plugin::Auth::Site::Twitter;
+use Amon2::Plugin::Auth::Site::Facebook;
 
 sub init {
     my ($class, $c, $code_conf) = @_;
-    warn "INSTALLING AUTH PLUGIN";
 
     my $mount_point = $code_conf->{mount} || '/auth';
     my $path = qr{^\Q$mount_point\E/?(github|facebook|twitter)/(authenticate|callback)$};
@@ -28,6 +28,8 @@ sub init {
                 return Amon2::Plugin::Auth::Site::Github->$2($c, $conf, $code_conf);
             } elsif ($site eq 'twitter') {
                 return Amon2::Plugin::Auth::Site::Twitter->$2($c, $conf, $code_conf);
+            } elsif ($site eq 'facebook') {
+                return Amon2::Plugin::Auth::Site::Facebook->$2($c, $conf, $code_conf);
             } else {
                 die "Unknown site: $site";
             }
