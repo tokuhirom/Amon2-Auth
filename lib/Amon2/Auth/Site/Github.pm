@@ -10,8 +10,6 @@ use JSON;
 use Amon2::Auth::Util qw(parse_content);
 our $VERSION = '0.01';
 
-with 'Amon2::Auth::Role::Site';
-
 has client_id => (
 	is => 'ro',
 	isa => 'Str',
