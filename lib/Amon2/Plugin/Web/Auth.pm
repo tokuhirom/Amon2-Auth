@@ -79,7 +79,72 @@ Amon2::Plugin::Web::Auth -
 
 =head1 DESCRIPTION
 
-Amon2::Plugin::Web::Auth is
+Amon2::Plugin::Web::Auth is authentication engine for Amon2.
+
+B<THIS MODULE IS EXPERIMENTAL STATE. SOME API CHANGES WITHOUT NOTICE>.
+
+=head1 CONFIGURATION IN CODE
+
+=over 4
+
+=item module
+
+This is a module name for authentication plugins. You can write 'Amon2::Auth::Site::Facebook' as 'Facebook' in this part. If you want to use your own authentication module, you can write it as '+My::Own::Auth::Module' like DBIx::Class.
+
+    __PACKAGE__->load_plugin(
+        'Web::Auth' => {
+            module => 'Twitter',
+            ...
+        }
+    );
+    # or
+    __PACKAGE__->load_plugin(
+        'Web::Auth' => {
+            module => '+My::Own::Auth::Module',
+            ...
+        }
+    );
+
+=item on_finished
+
+This is a callback when authentication flow was finished. You MUST return a response object in this callback function. You MAY return the response of C<< $c->redirect() >>.
+
+    __PACKAGE__->load_plugin('Web::Auth', {
+        module => 'Github',
+        on_finished => sub {
+            my ($c, $token, $user) = @_;
+            my $gihtub_id = $user->{id} || die;
+            my $github_name = $user->{name} || die;
+            $c->session->set('name' => $github_name);
+            $c->session->set('site' => 'github');
+            return $c->redirect('/');
+        }
+    });
+
+The arguments of this callback function is a auth module specific.
+
+=item user_info
+
+In auth module that uses OAuth2, is not required to fetch user information, just get a access_token. If you don't need a user information, you can set false value on this attribute.
+
+This attribute is true by default on most modules for your laziness.
+
+=item on_error
+
+Auth module calls this callback function when error occured.
+
+Arguments are following format.
+
+    my ($c, $err) = @_;
+
+The default value is following.
+
+    sub {
+        my ($c, $err) = @_;
+        die "Authentication error in $module: $err";
+    }
+
+=back
 
 =head1 AUTHOR
 

@@ -53,4 +53,81 @@ sub callback {
 }
 
 1;
+__END__
+
+=head1 NAME
+
+Amon2::Auth::Site::Twitter - Twitter integration for Amon2
+
+=head1 SYNOPSIS
+
+
+    __PACKAGE__->load_plugin('Web::Auth', {
+        module => 'Twitter',
+        on_finished => sub {
+            my ($c, $access_token, $access_token_secret, $user_id, $screen_name)
+                    = @_;
+            $c->session->set('name' => $screen_name);
+            $c->session->set('site' => 'twitter');
+            return $c->redirect('/');
+        }
+    });
+
+=head1 DESCRIPTION
+
+This is a twitter authentication module for Amon2. You can call a twitter APIs with this module.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item consumer_key
+
+=item consumer_secret
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item $auth->auth_uri($c:Amon2::Web, $callback_uri : Str) :Str
+
+Get a authenticate URI.
+
+=item $auth->callback($c:Amon2::Web, $callback:HashRef) : Plack::Response
+
+Process the authentication callback dispatching.
+
+C<< $callback >> MUST have two keys.
+
+=over 4
+
+=item on_error
+
+on_error callback function is called if an error was occured.
+
+The arguments are following:
+
+    sub {
+        my ($c, $error_message) = @_;
+        ...
+    }
+
+=item on_finished
+
+on_finished callback function is called if an authentication was finished.
+
+The arguments are following:
+
+    sub {
+        my ($c, $access_token, $access_token_secret, $user_id, $screen_name)
+                = @_;
+        ...
+    }
+
+=back
+
+=back
+
 

@@ -102,3 +102,95 @@ sub callback {
 }
 
 1;
+__END__
+
+=head1 NAME
+
+Amon2::Auth::Site::Github - Github integration for Amon2
+
+=head1 SYNOPSIS
+
+
+    __PACKAGE__->load_plugin('Web::Auth', {
+        module => 'Github',
+        on_finished => sub {
+            my ($c, $token, $user) = @_;
+            my $name = $user->{name} || die;
+            $c->session->set('name' => $name);
+            $c->session->set('site' => 'github');
+            return $c->redirect('/');
+        }
+    });
+
+=head1 DESCRIPTION
+
+This is a github authentication module for Amon2. You can call a github APIs with this module.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item client_id
+
+=item client_secret
+
+=item scope
+
+API scope in string.
+
+=item user_info(Default: true)
+
+Fetch user information after authenticate?
+
+=item ua(instance of LWP::UserAgent)
+
+You can replace instance of L<LWP::UserAgent>.
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item $auth->auth_uri($c:Amon2::Web, $callback_uri : Str) :Str
+
+Get a authenticate URI.
+
+=item $auth->callback($c:Amon2::Web, $callback:HashRef) : Plack::Response
+
+Process the authentication callback dispatching.
+
+C<< $callback >> MUST have two keys.
+
+=over 4
+
+=item on_error
+
+on_error callback function is called if an error was occured.
+
+The arguments are following:
+
+    sub {
+        my ($c, $error_message) = @_;
+        ...
+    }
+
+=item on_finished
+
+on_finished callback function is called if an authentication was finished.
+
+The arguments are following:
+
+    sub {
+        my ($c, $access_token, $user) = @_;
+        ...
+    }
+
+C<< $user >> contains user information. This code contains a information like L<https://api.github.com/users/dankogai>.
+
+If you set C<< $auth->user_info >> as false value, authentication engine does not pass C<< $user >>.
+
+=back
+
+=back
+
