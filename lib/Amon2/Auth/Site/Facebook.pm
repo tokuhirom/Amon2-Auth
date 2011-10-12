@@ -8,6 +8,7 @@ use LWP::UserAgent;
 use URI;
 use JSON;
 use Amon2::Auth::Util qw(parse_content);
+use Amon2::Auth;
 
 for (qw(client_id scope client_secret)) {
 	has $_ => (
@@ -17,7 +18,14 @@ for (qw(client_id scope client_secret)) {
 	);
 }
 
-my $ua = LWP::UserAgent->new();
+has ua => (
+	is => 'ro',
+	isa => 'LWP::UserAgent',
+	lazy => 1,
+	default => sub {
+		my $ua = LWP::UserAgent->new(agent => "Amon2::Auth/$Amon2::Auth::VERSION");
+	},
+);
 
 sub auth_uri {
 	my ($self, $c, $callback_uri) = @_;
@@ -48,7 +56,7 @@ sub callback {
 	$params{redirect_uri} =~ s/\?.+//;
 	$params{code} = $c->req->param('code') or die;
 	$uri->query_form(%params);
-	my $res = $ua->get($uri->as_string);
+	my $res = $self->ua->get($uri->as_string);
 	$res->is_success or do {
 		warn $res->decoded_content;
 		return $callback->{on_error}->($res->decoded_content);

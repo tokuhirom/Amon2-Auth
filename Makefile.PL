@@ -11,6 +11,7 @@ requires 'LWP::Protocol::https' => '6.00';
 requires 'JSON' => 2;
 
 requires 'Class::Method::Modifiers';
+requires 'Mouse';
 
 # for Github
 requires 'Hash::MultiValue';

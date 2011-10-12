@@ -5,6 +5,7 @@ use utf8;
 package Amon2::Auth::Site::Github;
 use Mouse;
 
+use Amon2::Auth;
 use LWP::UserAgent;
 use JSON;
 use Amon2::Auth::Util qw(parse_content);
@@ -30,7 +31,7 @@ has ua => (
 	isa => 'LWP::UserAgent',
 	lazy => 1,
 	default => sub {
-		my $ua = LWP::UserAgent->new(agent => "Amon2::Plugin::OAuth::Client/$VERSION");
+		my $ua = LWP::UserAgent->new(agent => "Amon2::Auth/$Amon2::Auth::VERSION");
 	},
 );
 
