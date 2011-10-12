@@ -5,22 +5,32 @@ use 5.008001;
 our $VERSION = '0.01';
 use Class::Method::Modifiers qw(install_modifier);
 use Amon2::Plugin::Auth::Site::Github;
+use Amon2::Plugin::Auth::Site::Twitter;
 
 sub init {
     my ($class, $c, $code_conf) = @_;
     warn "INSTALLING AUTH PLUGIN";
+
     my $mount_point = $code_conf->{mount} || '/auth';
-    my $path = qr{^\Q$mount_point};
-    $code_conf->{on_finished} or die;
-    $code_conf->{on_error} or die;
+    my $path = qr{^\Q$mount_point\E/?(github|facebook|twitter)/(authenticate|callback)$};
+
+    $code_conf->{on_finished} or die "Missing mandatory parameter: on_finished";
+    $code_conf->{on_error} or die "Missing mandatory parameter: on_error";
+
     install_modifier($c, 'around', "dispatch", sub {
         my ($orig, $c) = @_;
         my $path_info = $c->req->path_info;
         warn $path_info;
-        if ($path_info =~ m{^\Q$mount_point\E/?(github|facebook|twitter)/(authenticate|callback)$}) {
+        if ($path_info =~ $path) {
             my ($site, $method) = ($1, $2);
-            my $conf = $c->config->{'Auth'}->{'Github'} || die "Missing configuration for Auth.github";
-            return Amon2::Plugin::Auth::Site::Github->$2($c, $conf, $code_conf);
+            my $conf = $c->config->{'auth'}->{$site} || die "Missing configuration for auth.${site}";
+            if ($site eq 'github') {
+                return Amon2::Plugin::Auth::Site::Github->$2($c, $conf, $code_conf);
+            } elsif ($site eq 'twitter') {
+                return Amon2::Plugin::Auth::Site::Twitter->$2($c, $conf, $code_conf);
+            } else {
+                die "Unknown site: $site";
+            }
         } else {
             return $orig->($c);
         }

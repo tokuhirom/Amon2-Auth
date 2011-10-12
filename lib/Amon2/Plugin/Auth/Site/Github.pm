@@ -37,7 +37,7 @@ sub callback {
     $res->is_success or die "Cannot authenticate";
     my $dat = parse_content($res->decoded_content);
 	if (my $err = $dat->{error}) {
-		return $code_conf->{on_error}->($c, $err);
+		return $code_conf->{on_error}->($c, 'Github', $err);
 	}
     my $access_token = $dat->{access_token} or die "Cannot get a access_token";
 	return $code_conf->{on_finished}->(

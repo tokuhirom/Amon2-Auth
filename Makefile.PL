@@ -11,8 +11,13 @@ requires 'LWP::Protocol::https' => '6.00';
 requires 'JSON' => 2;
 
 requires 'Class::Method::Modifiers';
+
+# for Github
 requires 'Hash::MultiValue';
 requires 'URI::Escape';
+
+# for Twitter
+requires 'Net::Twitter::Lite' => '0.10004';
 
 tests 't/*.t t/*/*.t t/*/*/*.t t/*/*/*/*.t';
 test_requires 'Test::More' => 0.96; # done_testing, subtest
