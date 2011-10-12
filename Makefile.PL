@@ -1,8 +1,8 @@
 use inc::Module::Install;
 use Module::Install::AuthorTests;
 
-name 'Amon2-Plugin-Auth';
-all_from 'lib/Amon2/Plugin/Auth.pm';
+name 'Amon2-Auth';
+all_from 'lib/Amon2/Auth.pm';
 
 requires 'Amon2' => '3.03';
 requires 'Plack' =>  0.9949;
