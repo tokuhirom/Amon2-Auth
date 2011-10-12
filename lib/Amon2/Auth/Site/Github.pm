@@ -28,6 +28,12 @@ has scope => (
 	isa => 'Str',
 );
 
+has user_info => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 1,
+);
+
 has ua => (
 	is => 'ro',
 	isa => 'LWP::UserAgent',
@@ -85,7 +91,14 @@ sub callback {
 		return $callback->{on_error}->($err);
 	}
     my $access_token = $dat->{access_token} or die "Cannot get a access_token";
-	return $callback->{on_finished}->( $access_token );
+    my @args = ($access_token);
+    if ($self->user_info) {
+        my $res = $self->ua->get("https://api.github.com/user?oauth_token=${access_token}");
+        $res->is_success or return $callback->{on_error}->($res->status_line);
+        my $dat = decode_json($res->decoded_content);
+        push @args, $dat;
+    }
+	return $callback->{on_finished}->( @args );
 }
 
 1;

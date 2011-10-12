@@ -26,6 +26,9 @@ sub init {
     # auth object
     my $conf = $c->config->{'Auth'}->{$module} || die "Missing configuration for Auth.${module}";
     my $auth = $klass->new($conf);
+    if (exists $code_conf->{user_info}) {
+        $auth->user_info($code_conf->{user_info});
+    }
 
     $c->add_trigger(BEFORE_DISPATCH => sub {
         my $c = shift;
@@ -68,7 +71,7 @@ Amon2::Plugin::Web::Auth -
         'Web::Auth' => {
             module => 'Facebook',
             on_finished => sub {
-                my ($c, $token) = @_;
+                my ($c, $token, $user) = @_;
                 ...
             }
         }
