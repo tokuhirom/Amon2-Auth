@@ -11,6 +11,8 @@ use JSON;
 use Amon2::Auth::Util qw(parse_content);
 our $VERSION = '0.01';
 
+sub moniker { 'github' }
+
 has client_id => (
 	is => 'ro',
 	isa => 'Str',

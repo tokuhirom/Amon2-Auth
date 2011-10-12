@@ -6,6 +6,8 @@ package Amon2::Auth::Site::Twitter;
 use Mouse;
 use Net::Twitter::Lite;
 
+sub moniker { 'twitter' }
+
 has consumer_key => (
 	is => 'ro',
 	isa => 'Str',

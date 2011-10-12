@@ -10,6 +10,8 @@ use JSON;
 use Amon2::Auth::Util qw(parse_content);
 use Amon2::Auth;
 
+sub moniker { 'facebook' }
+
 for (qw(client_id scope client_secret)) {
 	has $_ => (
 		is => 'ro',

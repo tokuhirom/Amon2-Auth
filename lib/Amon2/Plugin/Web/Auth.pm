@@ -3,49 +3,48 @@ use strict;
 use warnings;
 use 5.008001;
 our $VERSION = '0.01';
-use Class::Method::Modifiers qw(install_modifier);
-use Amon2::Auth::Site::Github;
-use Amon2::Auth::Site::Twitter;
-use Amon2::Auth::Site::Facebook;
+use Plack::Util;
+use URI::WithBase;
 
 sub init {
     my ($class, $c, $code_conf) = @_;
 
-    my $mount_point = $code_conf->{mount} || '/auth';
-    my $path = qr{^\Q$mount_point\E/?(github|facebook|twitter)/(authenticate|callback)$};
+    my $module = $code_conf->{module} or die "Missing mandatory parameter: module";
+    my $klass = Plack::Util::load_class($code_conf->{module}, 'Amon2::Auth::Site');
 
-    $code_conf->{on_finished} or die "Missing mandatory parameter: on_finished";
-    $code_conf->{on_error} or die "Missing mandatory parameter: on_error";
+    my $moniker = $klass->moniker;
+    my $authenticate_path = $code_conf->{authenticate_path} || "/auth/${moniker}/authenticate";
+    my $callback_path = $code_conf->{callback_path} || "/auth/${moniker}/callback";
 
-    install_modifier($c, 'around', "dispatch", sub {
-        my ($orig, $c) = @_;
+    # handlers
+    my $on_finished = $code_conf->{on_finished} or die "Missing mandatory parameter: on_finished";
+    my $on_error = $code_conf->{on_error} || sub {
+        my ($c, $err) = @_;
+        die "Authentication error in $module: $err";
+    };
+
+    # auth object
+    my $conf = $c->config->{'Auth'}->{$module} || die "Missing configuration for Auth.${module}";
+    my $auth = $klass->new($conf);
+
+    $c->add_trigger(BEFORE_DISPATCH => sub {
+        my $c = shift;
         my $path_info = $c->req->path_info;
-        if ($path_info =~ $path) {
-            my ($site, $method) = ($1, $2);
-            my $conf = $c->config->{'auth'}->{$site} || die "Missing configuration for auth.${site}";
-            my $klass = {
-                github => 'Amon2::Auth::Site::Github',
-                twitter => 'Amon2::Auth::Site::Twitter',
-                facebook => 'Amon2::Auth::Site::Facebook',
-            }->{$site};
 
-            my $auth = $klass->new($conf);
-            if ($method eq 'authenticate') {
-                my $callback = $c->req->uri;
-                $callback =~ s!/authenticate$!/callback!;
-                return $c->redirect($auth->auth_uri($c, $callback));
-            } else {
-                return $auth->callback($c, {
-                    on_error => sub {
-                        $code_conf->{on_error}->($c, $site, @_);
-                    },
-                    on_finished => sub {
-                        $code_conf->{on_finished}->($c, $site, @_);
-                    },
-                });
-            }
+        if ($path_info eq $authenticate_path) {
+            my $callback = URI::WithBase->new($callback_path, $c->req->base);
+            return $c->redirect($auth->auth_uri($c, $callback->abs->as_string));
+        } elsif ($path_info eq $callback_path) {
+            return $auth->callback($c, {
+                on_finished => sub {
+                    $on_finished->($c, @_);
+                },
+                on_error => sub {
+                    $on_error->($c, @_);
+                },
+            });
         } else {
-            return $orig->($c);
+            return undef; # DECLINED
         }
     });
 }
@@ -61,7 +60,19 @@ Amon2::Plugin::Web::Auth -
 
 =head1 SYNOPSIS
 
-  use Amon2::Plugin::Web::Auth;
+    package MyApp::Web;
+
+    # simple usage
+    # more configurable...
+    __PACKAGE__->load_plugin(
+        'Web::Auth' => {
+            module => 'Facebook',
+            on_finished => sub {
+                my ($c, $token) = @_;
+                ...
+            }
+        }
+    );
 
 =head1 DESCRIPTION
 
