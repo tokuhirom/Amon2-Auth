@@ -12,7 +12,7 @@ requires 'JSON' => '2.53';
 
 requires 'Mouse' => 0.97;
 
-# for Github/Facebook
+# for Github/Facebook/Loctouch
 requires 'Hash::MultiValue' => 0.10;
 requires 'URI::Escape';
 
