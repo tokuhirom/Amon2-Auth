@@ -59,7 +59,7 @@ __END__
 
 =head1 NAME
 
-Amon2::Plugin::Web::Auth -
+Amon2::Plugin::Web::Auth - auth with SNS
 
 =head1 SYNOPSIS
 
