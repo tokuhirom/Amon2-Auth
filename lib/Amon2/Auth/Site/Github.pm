@@ -166,7 +166,7 @@ C<< $callback >> MUST have two keys.
 
 =item on_error
 
-on_error callback function is called if an error was occured.
+on_error callback function is called if an error was occurred.
 
 The arguments are following:
 

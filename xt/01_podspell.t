@@ -34,3 +34,17 @@ API
 URL
 URI
 db
+plugins
+callback
+auth
+OAuth
+Facebook
+mixi
+twitter
+Github
+Str
+APIs
+github
+loctouch
+LocTouch
+facebook

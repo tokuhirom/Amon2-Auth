@@ -131,7 +131,7 @@ This attribute is true by default on most modules for your laziness.
 
 =item on_error
 
-Auth module calls this callback function when error occured.
+Auth module calls this callback function when error occurred.
 
 Arguments are following format.
 
