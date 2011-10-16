@@ -48,3 +48,4 @@ github
 loctouch
 LocTouch
 facebook
+SNS
