@@ -47,9 +47,16 @@ sub callback {
 	$nt->request_token($cookie->[0]);
 	$nt->request_token_secret($cookie->[1]);
 	my $verifier = $c->req->param('oauth_verifier');
-	my ($access_token, $access_token_secret, $user_id, $screen_name) =
-		$nt->request_access_token(verifier => $verifier);
-	return $callback->{on_finished}->($access_token, $access_token_secret, $user_id, $screen_name);
+    my ($access_token, $access_token_secret, $user_id, $screen_name) = eval {
+        $nt->request_access_token(verifier => $verifier);
+    };
+    if ($@) {
+        # Net::Twitter::Lite throws exception like following
+        # GET https://twitter.com/oauth/access_token failed: 401 Unauthorized at /Users/tokuhirom/perl5/perlbrew/perls/perl-5.15.2/lib/site_perl/5.15.2/Net/Twitter/Lite.pm line 237.
+		return $callback->{on_error}->($@);
+    } else {
+        return $callback->{on_finished}->($access_token, $access_token_secret, $user_id, $screen_name);
+    }
 }
 
 1;
