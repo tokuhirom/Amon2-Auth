@@ -57,6 +57,8 @@ __END__
 
 =encoding utf8
 
+=for stopwords auth
+
 =head1 NAME
 
 Amon2::Plugin::Web::Auth - auth with SNS

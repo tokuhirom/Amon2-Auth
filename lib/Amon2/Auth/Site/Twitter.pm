@@ -101,11 +101,11 @@ This is a twitter authentication module for Amon2. You can call a twitter APIs w
 
 =over 4
 
-=item $auth->auth_uri($c:Amon2::Web, $callback_uri : Str) :Str
+=item C<< $auth->auth_uri($c:Amon2::Web, $callback_uri : Str) :Str >>
 
 Get a authenticate URI.
 
-=item $auth->callback($c:Amon2::Web, $callback:HashRef) : Plack::Response
+=item C<< $auth->callback($c:Amon2::Web, $callback:HashRef) : Plack::Response >>
 
 Process the authentication callback dispatching.
 
