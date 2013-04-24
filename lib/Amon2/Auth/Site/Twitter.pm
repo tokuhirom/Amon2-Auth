@@ -46,6 +46,9 @@ sub callback {
 	my $nt = $self->_nt();
 	$nt->request_token($cookie->[0]);
 	$nt->request_token_secret($cookie->[1]);
+    if (my $denied = $c->req->param('denied')) {
+        return $callback->{on_error}->("Access denied");
+    }
 	my $verifier = $c->req->param('oauth_verifier');
     my ($access_token, $access_token_secret, $user_id, $screen_name) = eval {
         $nt->request_access_token(verifier => $verifier);
