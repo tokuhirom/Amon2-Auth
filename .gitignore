@@ -13,3 +13,10 @@ blib/
 pm_to_blib
 META.yml
 MYMETA.*
+/Amon2-Auth-*
+/.build
+/_build_params
+/Build
+!Build/
+!META.json
+!LICENSE

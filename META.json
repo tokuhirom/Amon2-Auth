@@ -1,0 +1,86 @@
+{
+   "abstract" : "Authentication module for Amon2",
+   "author" : [
+      "Tokuhiro Matsuno <tokuhirom AAJKLFJEF GMAIL COM>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Minilla/v0.0.56, CPAN::Meta::Converter version 2.130880",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Amon2-Auth",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "inc",
+         "share",
+         "eg",
+         "examples",
+         "author"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "CPAN::Meta" : "0",
+            "CPAN::Meta::Prereqs" : "0",
+            "Module::Build" : "0.38"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Test::CPAN::Meta" : "0",
+            "Test::MinimumVersion" : "0.10108",
+            "Test::Pod" : "1.41",
+            "Test::Spellunker" : "v0.0.16"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Amon2" : "3.03",
+            "Hash::MultiValue" : "0.1",
+            "JSON" : "2.53",
+            "LWP" : "6.00",
+            "LWP::Protocol::https" : "6.00",
+            "LWP::UserAgent" : "0",
+            "Module::Build" : "0",
+            "Mouse" : "0.97",
+            "Net::Twitter::Lite" : "0.10004",
+            "Plack" : "0.9984",
+            "Plack::Util" : "0",
+            "URI" : "0",
+            "URI::Escape" : "0",
+            "URI::WithBase" : "0",
+            "parent" : "0",
+            "perl" : "5.008001"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.96"
+         }
+      }
+   },
+   "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/tokuhirom/Amon2-Auth/issues"
+      },
+      "homepage" : "https://github.com/tokuhirom/Amon2-Auth",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/tokuhirom/Amon2-Auth.git",
+         "web" : "https://github.com/tokuhirom/Amon2-Auth"
+      }
+   },
+   "version" : "0.02",
+   "x_contributors" : [
+      "Takumi Akiyama <t.akiym@gmail.com>",
+      "Tokuhiro Matsuno <tokuhirom@gmail.com>"
+   ]
+}
