@@ -2,6 +2,16 @@ Revision history for Perl module Amon2::Plugin::Auth
 
 {{$NEXT}}
 
+0.04 2014-05-04T23:49:06Z
+
+    commit 90629cc8584f593c28dd9a3e31ec715e11c887f1
+    Author: Kenta Kase <kesin1202000@gmail.com>
+    Date:   Sun May 4 16:53:15 2014 +0900
+
+        Support Twitter API v1.1
+
+        Change Net::Twitter::Lite to Net::Twitter::Lite::WithAPIv1_1
+
 0.03 2013-04-24T06:11:16Z
 
     - Site::Twitter: catch exception from Net::Twitter::Lite and

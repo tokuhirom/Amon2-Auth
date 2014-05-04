@@ -6,7 +6,7 @@ Amon2::Auth - Authentication module for Amon2
 
 Amon2::Auth is authentication modules for Amon2.
 
-Please read [Amon2::Plugin::Web::Auth](http://search.cpan.org/perldoc?Amon2::Plugin::Web::Auth) for more details.
+Please read [Amon2::Plugin::Web::Auth](https://metacpan.org/pod/Amon2::Plugin::Web::Auth) for more details.
 
 # AUTHOR
 
