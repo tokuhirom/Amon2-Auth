@@ -50,7 +50,7 @@
             "LWP::UserAgent" : "0",
             "Module::Build" : "0",
             "Mouse" : "0.97",
-            "Net::Twitter::Lite" : "0.10004",
+            "Net::Twitter::Lite" : "0.12006",
             "Plack" : "0.9984",
             "Plack::Util" : "0",
             "URI" : "0",
