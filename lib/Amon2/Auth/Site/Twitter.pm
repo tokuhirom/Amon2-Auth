@@ -4,7 +4,7 @@ use utf8;
 
 package Amon2::Auth::Site::Twitter;
 use Mouse;
-use Net::Twitter::Lite;
+use Net::Twitter::Lite::WithAPIv1_1;
 
 sub moniker { 'twitter' }
 
@@ -21,7 +21,7 @@ has consumer_secret => (
 
 sub _nt {
 	my ($self) = @_;
-    my $nt = Net::Twitter::Lite->new(
+    my $nt = Net::Twitter::Lite::WithAPIv1_1->new(
         consumer_key    => $self->consumer_key,
         consumer_secret => $self->consumer_secret,
     );

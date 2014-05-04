@@ -8,7 +8,7 @@ requires 'LWP::Protocol::https', '6.00';
 requires 'LWP::UserAgent';
 requires 'Module::Build';
 requires 'Mouse', '0.97';
-requires 'Net::Twitter::Lite', '0.10004';
+requires 'Net::Twitter::Lite', '0.12006';
 requires 'parent';
 requires 'Plack', '0.9984';
 requires 'Plack::Util';
