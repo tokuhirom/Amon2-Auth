@@ -2,6 +2,14 @@ Revision history for Perl module Amon2::Plugin::Auth
 
 {{$NEXT}}
 
+0.05 2014-09-02T21:11:33Z
+
+    commit 46b0793d23a3de9789ae35b6d0471123a09e34dc
+    Author: Wataru TOYA <watrty@gmail.com>
+    Date:   Tue Sep 2 15:53:22 2014 +0900
+
+        use ssl connection to twitter
+
 0.04 2014-05-04T23:49:06Z
 
     commit 90629cc8584f593c28dd9a3e31ec715e11c887f1

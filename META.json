@@ -4,7 +4,7 @@
       "Tokuhiro Matsuno <tokuhirom AAJKLFJEF GMAIL COM>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.15.1, CPAN::Meta::Converter version 2.140640",
+   "generated_by" : "Minilla/v2.1.1, CPAN::Meta::Converter version 2.141520",
    "license" : [
       "perl_5"
    ],
@@ -28,8 +28,6 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "CPAN::Meta" : "0",
-            "CPAN::Meta::Prereqs" : "0",
             "Module::Build" : "0.38"
          }
       },
@@ -80,11 +78,12 @@
          "web" : "https://github.com/tokuhirom/Amon2-Auth"
       }
    },
-   "version" : "0.04",
+   "version" : "0.05",
    "x_contributors" : [
       "Takumi Akiyama <t.akiym@gmail.com>",
       "Neil Bowers <neil@bowers.com>",
       "Kenta Kase <kesin1202000@gmail.com>",
+      "Wataru TOYA <watrty@gmail.com>",
       "Tokuhiro Matsuno <tokuhirom@gmail.com>"
    ]
 }
