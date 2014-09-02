@@ -24,6 +24,7 @@ sub _nt {
     my $nt = Net::Twitter::Lite::WithAPIv1_1->new(
         consumer_key    => $self->consumer_key,
         consumer_secret => $self->consumer_secret,
+        ssl             => 1,
     );
 	return $nt;
 }
