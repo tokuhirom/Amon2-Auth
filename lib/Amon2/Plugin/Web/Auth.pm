@@ -35,7 +35,7 @@ sub init {
         my $path_info = $c->req->path_info;
 
         if ($path_info eq $authenticate_path) {
-            my $callback = URI::WithBase->new($callback_path, $c->req->base);
+            my $callback = URI::WithBase->new($c->uri_for($callback_path), $c->req->base);
             return $c->redirect($auth->auth_uri($c, $callback->abs->as_string));
         } elsif ($path_info eq $callback_path) {
             return $auth->callback($c, {
