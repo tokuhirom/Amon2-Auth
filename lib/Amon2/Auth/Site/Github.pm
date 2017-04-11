@@ -9,7 +9,7 @@ use Amon2::Auth;
 use LWP::UserAgent;
 use JSON;
 use Amon2::Auth::Util qw(parse_content);
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub moniker { 'github' }
 

@@ -2,7 +2,7 @@ package Amon2::Plugin::Web::Auth;
 use strict;
 use warnings;
 use 5.008001;
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 use Plack::Util;
 use URI::WithBase;
 

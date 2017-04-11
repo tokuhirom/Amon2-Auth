@@ -10,7 +10,7 @@ Please read [Amon2::Plugin::Web::Auth](https://metacpan.org/pod/Amon2::Plugin::W
 
 # AUTHOR
 
-Tokuhiro Matsuno <tokuhirom AAJKLFJEF GMAIL COM>
+Tokuhiro Matsuno &lt;tokuhirom AAJKLFJEF GMAIL COM>
 
 # SEE ALSO
 

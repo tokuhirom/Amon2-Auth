@@ -2,6 +2,11 @@ Revision history for Perl module Amon2::Plugin::Auth
 
 {{$NEXT}}
 
+0.07 2017-04-11T07:56:30Z
+
+    Facebook's API style was changed. follow it.
+    (Kan Fushihara https://github.com/tokuhirom/Amon2-Auth/pull/6)
+
 0.06 2015-01-15T05:49:10Z
 
     commit a8490a0208a01582c4d0df5caa9c1f89ae9a234f
