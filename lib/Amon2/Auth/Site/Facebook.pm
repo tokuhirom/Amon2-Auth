@@ -7,7 +7,6 @@ use Mouse;
 use LWP::UserAgent;
 use URI;
 use JSON;
-use Amon2::Auth::Util qw(parse_content);
 use Amon2::Auth;
 
 sub moniker { 'facebook' }
@@ -24,6 +23,12 @@ has user_info => (
     is => 'rw',
     isa => 'Bool',
     default => 1,
+);
+
+has fields => (
+	is => 'rw',
+	isa => 'Str',
+	default => 'id,name',
 );
 
 has ua => (
@@ -69,14 +74,14 @@ sub callback {
 		warn $res->decoded_content;
 		return $callback->{on_error}->($res->decoded_content);
 	};
-    my $dat = parse_content($res->decoded_content);
+    my $dat = decode_json($res->decoded_content);
 	if (my $err = $dat->{error}) {
 		return $callback->{on_error}->($err);
 	}
     my $access_token = $dat->{access_token} or die "Cannot get a access_token";
     my @args = ($access_token);
     if ($self->user_info) {
-        my $res = $self->ua->get("https://graph.facebook.com/me?access_token=${access_token}");
+        my $res = $self->ua->get("https://graph.facebook.com/me?fields=@{[$self->fields]}&access_token=${access_token}");
         $res->is_success or return $callback->{on_error}->($res->status_line);
         my $dat = decode_json($res->decoded_content);
         push @args, $dat;
@@ -124,6 +129,11 @@ API scope in string.
 =item user_info(Default: true)
 
 Fetch user information after authenticate?
+
+=item fields(Default: "id,name")
+
+need fields of user information
+L<https://developers.facebook.com/docs/facebook-login/permissions/v2.2#reference-public_profile>
 
 =item ua(instance of LWP::UserAgent)
 
